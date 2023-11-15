@@ -1,0 +1,111 @@
+#root {
+    height: 100vh;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.App, .ant-layout {
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    margin-right: 30px;
+    align-items: center;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    background: #001529;
+    border-radius: 50%;
+}
+
+.header-title {
+    color: white;
+    font-size: 24px;
+    font-style: oblique;
+}
+
+#error-page {
+    text-align: center;
+}
+
+.error-icon {
+    margin-top: 50px;
+    font-size: 36px;
+}
+
+:where(.css-dev-only-do-not-override-sk7ap8) a {
+    color: #46485f;
+}
+
+.create-button {
+    margin-bottom: 20px;
+}
+
+.thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.submit-button {
+    color: black;
+    background-color: #ffffff;
+    border-color: #d9d9d9;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+:where(.css-dev-only-do-not-override-sk7ap8).ant-btn-primary:not(:disabled):hover {
+    background-color: #ffffff;
+    border-color: #4096ff;
+    color: #4096ff;
+}
+
+/*.charts{*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*}*/
+
+.sex-charts {
+    height: 500px;
+    width: 1000px;
+    margin-bottom: 30px;
+}
+
+.course-charts {
+    height: 500px;
+    width: 1000px;
+    margin-bottom: 30px;
+}
+
+.article-charts {
+    height: 500px;
+    width: 1000px;
+}
+
+:where(.css-dev-only-do-not-override-sk7ap8).ant-select:where(.css-dev-only-do-not-override-sk7ap8).ant-select-in-form-item {
+    width: 100px;
+}
+
+.container {
+    margin: 15px;
+}
+
+.container .title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
