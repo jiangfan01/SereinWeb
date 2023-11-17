@@ -1,7 +1,7 @@
 import React from 'react';
-import {Popconfirm, message, Tooltip} from 'antd';
+import {Popconfirm, message} from 'antd';
 
-const DeleteButton = ({onConfirm, props, id}) => {
+const DeleteButton = ({onConfirm, props,id}) => {
     const handleConfirm = async () => {
         try {
             const res = await onConfirm(id);
@@ -20,9 +20,7 @@ const DeleteButton = ({onConfirm, props, id}) => {
             okText="确定"
             cancelText="取消"
         >
-            <Tooltip title={"删除"}>
-                <a>删除</a>
-            </Tooltip>
+            <a>删除</a>
         </Popconfirm>
     );
 };

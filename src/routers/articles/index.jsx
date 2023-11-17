@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Button, message, Popconfirm, Space, Table,} from 'antd';
-import {deleteArticle, fetchArticleList} from "../../api/articles.js";
+import {deleteArticle, fetchArticleList} from "../../../api/articles.js";
 import formatDate from "../../../utils/formatDate.js";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
-import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 
 const App = () => {
     const [pagination, setPagination] = useState({});
@@ -45,17 +44,7 @@ const App = () => {
             title: '编号',
             dataIndex: 'id',
             key: 'id',
-            render: (id) => {
-                const title = `ID:${id}`
-                if (!id) {
-                    return <a>0</a>;
-                }
-                return (
-                    <CustomTooltip title={title}>
-                        <a>{id}</a>
-                    </CustomTooltip>
-                );
-            },
+            render: (text) => <a>{text}</a>,
             align: 'center',
         },
         {
@@ -63,17 +52,6 @@ const App = () => {
             dataIndex: 'title',
             key: 'title',
             align: 'center',
-            render: (title) => {
-                const otherTitle = `章节标题:${title}`
-                if (!title) {
-                    return "无";
-                }
-                return (
-                    <CustomTooltip title={otherTitle}>
-                        {title}
-                    </CustomTooltip>
-                );
-            },
         },
         {
             title: '创建时间',
@@ -85,17 +63,7 @@ const App = () => {
             title: '修改时间',
             dataIndex: 'updatedAt',
             key: 'updatedAt',
-            render: (updatedAt) => {
-                if (!updatedAt) {
-                    return "无";
-                }
-                const formattedDate = formatDate(updatedAt);
-                return (
-                    <CustomTooltip title={`修改时间: ${formattedDate}`}>
-                        {formattedDate}
-                    </CustomTooltip>
-                );
-            },
+            render: (updatedAt) => formatDate(updatedAt),
             align: 'center',
         },
         {
@@ -104,12 +72,10 @@ const App = () => {
             align: 'center',
             render: (_, record) => (
                 <Space size="middle">
-                    <CustomTooltip title={"编辑"}>
-                        <Link to={`/articles/edit/${record.id}`}>
-                            编辑
-                        </Link>
-                    </CustomTooltip>
-                    <DeleteButton onConfirm={confirmDelete} props={{init}} id={record.id}/>
+                    <Link to={`/articles/edit/${record.id}`}>
+                        编辑
+                    </Link>
+                    <DeleteButton onConfirm={confirmDelete} props={{ init }} id={record.id} />
                 </Space>
             ),
         },
@@ -130,4 +96,4 @@ const App = () => {
         </>
     )
 }
-export default App
+export default App;

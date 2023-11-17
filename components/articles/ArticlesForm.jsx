@@ -1,18 +1,16 @@
 import React, {useEffect} from 'react';
 import {Button, Form, Input, message} from 'antd';
-import {createArticle, fetchArticle, updateArticle} from "../../src/api/articles.js";
+import {createArticle, fetchArticle, updateArticle} from "../../api/articles.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const rules = {
     title: [{required: true, message: "请填写文章标题!"}],
     content: [{required: true, message: "请填写内容!"}]
 }
-
 const App = (props) => {
-    const params = useParams();
     const navigate = useNavigate();
+    const params = useParams();
     const [formData] = Form.useForm();
-    const {id} = useParams();
     const init = async () => {
         const res = await fetchArticle(params.id)
         formData.setFieldsValue(res.data.article)
@@ -22,7 +20,7 @@ const App = (props) => {
         if (props.isEdit) {
             init().then()
         }
-    }, [id])
+    }, [])
 
 
     const onFinish = async (v) => {
@@ -40,7 +38,6 @@ const App = (props) => {
     }
 
     return (<>
-
         <Form
             form={formData}
             name="wrap"
@@ -84,4 +81,4 @@ const App = (props) => {
     </>)
 
 };
-export default App
+export default App;

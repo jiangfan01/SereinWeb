@@ -12,13 +12,12 @@ import {
     FileTextOutlined,
 } from '@ant-design/icons';
 import {Layout, Menu, Button, theme} from 'antd';
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 
 const {Header, Sider, Content} = Layout;
 const App = () => {
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(false);
-    const location = useLocation();
     const {
         token: {colorBgContainer},
     } = theme.useToken();
@@ -31,7 +30,6 @@ const App = () => {
             label,
         };
     }
-
 
     // side路由
     const items = [

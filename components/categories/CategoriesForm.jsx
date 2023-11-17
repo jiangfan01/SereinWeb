@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Button, Form, Input, message} from 'antd';
-import {createCategory, fetchCategory, updateCategory} from "../../src/api/categories.js";
+import {createCategory, fetchCategory, updateCategory} from "../../api/categories.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const rules = {
@@ -38,7 +38,6 @@ const App = (props) => {
     }
 
     return (<>
-
         <Form
             form={formData}
             name="wrap"

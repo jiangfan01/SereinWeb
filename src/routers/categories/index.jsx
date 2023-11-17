@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Input, InputNumber, message, Popconfirm, Space, Table, Tooltip,} from 'antd';
-import {deleteCategory, fetchCategoryList, updateCategory} from "../../api/categories.js";
+import {Button, Input, InputNumber, message, Popconfirm, Space, Table,} from 'antd';
+import {deleteCategory, fetchCategoryList, updateCategory} from "../../../api/categories.js";
 import formatDate from "../../../utils/formatDate.js";
 import {Link} from "react-router-dom";
 import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
-import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
+import {deleteArticle} from "../../../api/articles.js";
 
 const App = () => {
     const [pagination, setPagination] = useState({});
@@ -70,17 +70,7 @@ const App = () => {
             title: '编号',
             dataIndex: 'id',
             key: 'id',
-            render: (id) => {
-                const title = `ID:${id}`
-                if (!id) {
-                    return <a>0</a>;
-                }
-                return (
-                    <CustomTooltip title={title}>
-                        <a>{id}</a>
-                    </CustomTooltip>
-                );
-            },
+            render: (text) => <a>{text}</a>,
             align: 'center',
         },
         {
@@ -123,17 +113,7 @@ const App = () => {
             title: '修改时间',
             dataIndex: 'updatedAt',
             key: 'updatedAt',
-            render: (updatedAt) => {
-                if (!updatedAt) {
-                    return "无";
-                }
-                const formattedDate = formatDate(updatedAt);
-                return (
-                    <Tooltip title={`修改时间: ${formattedDate}`}>
-                        {formattedDate}
-                    </Tooltip>
-                );
-            },
+            render: (updatedAt) => formatDate(updatedAt),
             align: 'center',
         },
         {
