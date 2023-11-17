@@ -1,4 +1,4 @@
-import request from "../utils/request.js";
+import request from "../../utils/request.js";
 
 // 查询列表
 export function fetchCategoryList(params) {

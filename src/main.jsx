@@ -20,6 +20,9 @@ import ArticlesEdit from "./routers/articles/edit.jsx"
 import CoursesList from "./routers/courses/index.jsx"
 import CoursesCreate from "./routers/courses/create.jsx"
 import CoursesEdit from "./routers/courses/edit.jsx"
+import ChaptersList from "./routers/chapters/index.jsx"
+import ChaptersEdit from "./routers/chapters/edit.jsx"
+import ChaptersCreate from "./routers/chapters/create.jsx"
 
 const router = createBrowserRouter([
     {
@@ -63,6 +66,18 @@ const router = createBrowserRouter([
             {
                 path: "courses/edit/:id",
                 element: <CoursesEdit/>,
+            },
+            {
+                path: "chapters",
+                element: <ChaptersList/>,
+            },
+            {
+                path: "chapters/create",
+                element: <ChaptersCreate/>,
+            },
+            {
+                path: "chapters/edit/:id",
+                element: <ChaptersEdit/>,
             },
         ]
     },
