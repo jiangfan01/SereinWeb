@@ -3,7 +3,7 @@ import {Button, Input, InputNumber, message, Popconfirm, Space, Table,} from 'an
 import {deleteCategory, fetchCategoryList, updateCategory} from "../../../api/categories.js";
 import formatDate from "../../../utils/formatDate.js";
 import {Link} from "react-router-dom";
-import Pagination from "../../../components/layout/Pagination.jsx";
+import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import {deleteArticle} from "../../../api/articles.js";
 
@@ -22,11 +22,10 @@ const App = () => {
         setCategories(res.data.categories)
         setPagination(res.data.pagination)
         setLoading(false)
+        if (res.code !== 200) {
+            message.error(res.message)
+        }
     }
-
-    useEffect(() => {
-        init().then()
-    }, [pageParams])
 
     //页面发生变化
     const onChange = (page, pageSize) => {
@@ -61,6 +60,10 @@ const App = () => {
             message.error('排序更新失败');
         }
     }
+
+    useEffect(() => {
+        init().then()
+    }, [pageParams])
 
     const columns = [
         {

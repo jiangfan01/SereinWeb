@@ -8,7 +8,7 @@ import {
 import zhCN from "antd/locale/zh_CN";
 import "./index.css"
 
-// 路由路劲
+// 路由路径
 import Root from "./routers/layout/layout.jsx";
 import ErrorPage from "./routers/errors/error-page.jsx";
 import CategoriesList from "./routers/categories/index.jsx"
@@ -18,6 +18,8 @@ import ArticlesList from "./routers/articles/index.jsx"
 import ArticlesCreate from "./routers/articles/create.jsx"
 import ArticlesEdit from "./routers/articles/edit.jsx"
 import CoursesList from "./routers/courses/index.jsx"
+import CoursesCreate from "./routers/courses/create.jsx"
+import CoursesEdit from "./routers/courses/edit.jsx"
 
 const router = createBrowserRouter([
     {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
             {
                 path: "courses",
                 element: <CoursesList/>,
+            },
+            {
+                path: "courses/create",
+                element: <CoursesCreate/>,
+            },
+            {
+                path: "courses/edit/:id",
+                element: <CoursesEdit/>,
             },
         ]
     },

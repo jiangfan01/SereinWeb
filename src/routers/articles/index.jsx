@@ -3,7 +3,7 @@ import {Button, message, Popconfirm, Space, Table,} from 'antd';
 import {deleteArticle, fetchArticleList} from "../../../api/articles.js";
 import formatDate from "../../../utils/formatDate.js";
 import {Link} from "react-router-dom";
-import Pagination from "../../../components/layout/Pagination.jsx";
+import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 
 const App = () => {
@@ -38,7 +38,6 @@ const App = () => {
     const confirmDelete = async (id) => {
         return await deleteArticle(id);
     };
-
 
     const columns = [
         {
