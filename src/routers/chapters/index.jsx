@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, InputNumber, message, Space, Table, Tag, Tooltip} from 'antd';
+import {Breadcrumb, Button, InputNumber, message, Space, Table, Tag, Tooltip} from 'antd';
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import {Link, useParams, useSearchParams} from "react-router-dom";
 import {deleteChapter, fetchChapterList, updateChapter} from "../../api/chapters.js";
@@ -8,6 +8,7 @@ import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import formatDate from "../../../utils/formatDate.js";
 import SearchBox from "../../../components/common/SearchBox.jsx";
 import {fetchCategoryList} from "../../api/categories.js";
+import {BarcodeOutlined, FileTextOutlined, HomeOutlined, UserOutlined, YoutubeOutlined} from "@ant-design/icons";
 
 
 const App = () => {
@@ -208,6 +209,42 @@ const App = () => {
 
     return (
         <>
+            <Breadcrumb
+                style={{marginBottom: 15}}
+                items={[
+                    {
+                        href: '/',
+                        title: <HomeOutlined/>,
+                    },
+                    {
+                        href: '',
+                        title: (
+                            <>
+                                <YoutubeOutlined/>
+                                <span>视频管理</span>
+                            </>
+                        ),
+                    },
+                    {
+                        href: '/courses',
+                        title: (
+                            <>
+                                <FileTextOutlined/>
+                                <span>课程列表</span>
+                            </>
+                        ),
+                    },
+                    {
+                        href: '/chapters',
+                        title: (
+                            <>
+                                <BarcodeOutlined />
+                                <span>章节列表</span>
+                            </>
+                        ),
+                    },
+                ]}
+            />
             <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Link to={`/chapters/create`}><Button style={{marginBottom: 10}}>新增一篇章节</Button></Link>
                 <SearchBox onChange={handleSearch} loading={loading}/>

@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
-import {Button, Form, Input, message} from 'antd';
+import {Breadcrumb, Button, Form, Input, message} from 'antd';
 import {createArticle, fetchArticle, updateArticle} from "../../src/api/articles.js";
 import {useNavigate, useParams} from "react-router-dom";
+import {BookOutlined, EditOutlined, HomeOutlined, PlusCircleOutlined, UserOutlined} from "@ant-design/icons";
 
 const rules = {
     title: [{required: true, message: "请填写文章标题!"}],
@@ -40,7 +41,43 @@ const App = (props) => {
     }
 
     return (<>
+        <Breadcrumb
+            style={{marginBottom: 15}}
+            items={[
+                {
+                    href: '/',
+                    title: <HomeOutlined/>,
 
+                },
+                {
+                    href: '/articles',
+                    title: (
+                        <>
+                            <BookOutlined/>
+                            <span>文章列表</span>
+                        </>
+                    ),
+                },
+                props.isEdit ?
+                    {
+                        href: `/articles/edit/${params.id}`,
+                        title: (
+                            <>
+                                <EditOutlined />
+                                <span>文章编辑</span>
+                            </>
+                        ),
+                    } : {
+                        href: '/articles/create',
+                        title: (
+                            <>
+                                <PlusCircleOutlined />
+                                <span>文章新增</span>
+                            </>
+                        ),
+                    }
+            ]}
+        />
         <Form
             form={formData}
             name="wrap"

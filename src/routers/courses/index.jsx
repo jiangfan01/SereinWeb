@@ -1,12 +1,19 @@
 import {Link} from "react-router-dom";
-import {Button, Col, Image, message, Space, Switch, Table, Tag, Tooltip} from "antd";
+import {Breadcrumb, Button, Col, Image, message, Space, Switch, Table, Tag, Tooltip} from "antd";
 import Pagination from "../../../components/common/Pagination.jsx";
 import React, {useEffect, useState} from "react";
 import formatDate from "../../../utils/formatDate.js";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import {deleteCourse, fetchCourseList, updateCourse} from "../../api/courses.js";
 import CountUp from "react-countup";
-import {LikeOutlined, TeamOutlined} from "@ant-design/icons";
+import {
+    FileTextOutlined,
+    HomeOutlined,
+    LikeOutlined,
+    TeamOutlined,
+    UserOutlined,
+    YoutubeOutlined
+} from "@ant-design/icons";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import SearchBox from "../../../components/common/SearchBox.jsx";
 import {fetchCategoryList} from "../../api/categories.js";
@@ -288,6 +295,33 @@ const App = () => {
     ];
 
     return (<>
+            <Breadcrumb
+                style={{marginBottom: 15}}
+                items={[
+                    {
+                        href: '/',
+                        title: <HomeOutlined/>,
+                    },
+                    {
+                        href: '',
+                        title: (
+                            <>
+                                <YoutubeOutlined/>
+                                <span>视频管理</span>
+                            </>
+                        ),
+                    },
+                    {
+                        href: '/courses',
+                        title: (
+                            <>
+                                <FileTextOutlined/>
+                                <span>课程列表</span>
+                            </>
+                        ),
+                    },
+                ]}
+            />
             <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Link to={`/courses/create`}><Button style={{marginBottom: 10}}>新增一篇课程</Button></Link>
                 <SearchBox onChange={handleSearch} loading={loading}></SearchBox>

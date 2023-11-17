@@ -1,6 +1,16 @@
-import {InboxOutlined, LoadingOutlined, PlusOutlined, UploadOutlined} from '@ant-design/icons';
+import {
+    EditOutlined,
+    FileTextOutlined,
+    HomeOutlined,
+    InboxOutlined,
+    LoadingOutlined, PlusCircleOutlined,
+    PlusOutlined,
+    UploadOutlined,
+    UserOutlined, YoutubeOutlined
+} from '@ant-design/icons';
 import React, {useEffect, useState} from 'react';
 import {
+    Breadcrumb,
     Button,
     Form, Input, message,
     Select,
@@ -18,6 +28,7 @@ import {uploadToken} from "../../src/api/upload.js";
 const {Option} = Select;
 
 const App = (props) => {
+    console.log(3213, props)
     const navigate = useNavigate();
     const params = useParams();
     const [loading, setLoading] = useState(false)
@@ -163,13 +174,51 @@ const App = (props) => {
 
     return (
         <>
-            <CustomBreadcrumb
-                routes={[
-                    {path: '/', label: '首页'},
-                    {path: '/courses', label: '分类列表'},
-                    {path: `/courses/edit/${params.id}`, label: breadcrumbLabel},
+            <Breadcrumb
+                style={{marginBottom: 15}}
+                items={[
+                    {
+                        href: '/',
+                        title: <HomeOutlined/>,
+                    },
+                    {
+                        href: '',
+                        title: (
+                            <>
+                                <YoutubeOutlined/>
+                                <span>视频管理</span>
+                            </>
+                        ),
+                    },
+                    {
+                        href: '/courses',
+                        title: (
+                            <>
+                                <FileTextOutlined/>
+                                <span>课程列表</span>
+                            </>
+                        ),
+                    },
+                    props.isEdit ? {
+                        href: `/courses/edit${params.id}`,
+                        title: (
+                            <>
+                                <EditOutlined/>
+                                <span>课程编辑</span>
+                            </>
+                        ),
+                    } : {
+                        href: `/courses/create`,
+                        title: (
+                            <>
+                                <PlusCircleOutlined/>
+                                <span>课程新增</span>
+                            </>
+                        ),
+                    }
                 ]}
-            />
+            >
+            </Breadcrumb>
             <Form
                 form={formData}
                 name="wrap"

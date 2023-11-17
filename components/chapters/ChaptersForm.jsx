@@ -1,6 +1,14 @@
-import {UploadOutlined} from '@ant-design/icons';
+import {
+    BarcodeOutlined, EditOutlined,
+    FileTextOutlined,
+    HomeOutlined, PlusCircleOutlined,
+    UploadOutlined,
+    UserOutlined,
+    YoutubeOutlined
+} from '@ant-design/icons';
 import React, {useEffect, useState} from 'react';
 import {
+    Breadcrumb,
     Button,
     Form, Input, InputNumber, message,
     Select,
@@ -37,7 +45,6 @@ const App = (props) => {
                 uploadToken(),
                 fetchCourseList()
             ]);
-            console.log(coursesRes.data.courses, 32765757)
             if (coursesRes.data && coursesRes.data.courses) {
                 setCourses(coursesRes.data.courses);
             }
@@ -131,6 +138,59 @@ const App = (props) => {
 
     return (
         <>
+            <Breadcrumb
+                style={{marginBottom: 15}}
+                items={[
+                    {
+                        href: '/',
+                        title: <HomeOutlined/>,
+                    },
+                    {
+                        href: '',
+                        title: (
+                            <>
+                                <YoutubeOutlined/>
+                                <span>视频管理</span>
+                            </>
+                        ),
+                    },
+                    {
+                        href: '/courses',
+                        title: (
+                            <>
+                                <FileTextOutlined/>
+                                <span>课程列表</span>
+                            </>
+                        ),
+                    },
+                    {
+                        href: '/chapters',
+                        title: (
+                            <>
+                                <BarcodeOutlined/>
+                                <span>章节列表</span>
+                            </>
+                        ),
+                    },
+                    props.isEdit ? {
+                        href: `/chapters/edit/${params.id}`,
+                        title: (
+                            <>
+                                <EditOutlined/>
+                                <span>编辑章节</span>
+                            </>
+                        ),
+                    } : {
+                        href: '/chapters/create',
+                        title: (
+                            <>
+                                <PlusCircleOutlined/>
+                                <span>新增章节</span>
+                            </>
+                        ),
+                    },
+                ]}
+            />
             <Form
                 form={formData}
                 name="wrap"

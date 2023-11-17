@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, message, Popconfirm, Space, Table,} from 'antd';
+import {Breadcrumb, Button, message, Popconfirm, Space, Table,} from 'antd';
 import {deleteArticle, fetchArticleList} from "../../api/articles.js";
 import formatDate from "../../../utils/formatDate.js";
 import {Link, useParams} from "react-router-dom";
@@ -7,6 +7,7 @@ import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import SearchBox from "../../../components/common/SearchBox.jsx";
+import {BookOutlined, HomeOutlined, UserOutlined} from "@ant-design/icons";
 
 const App = () => {
     const [pagination, setPagination] = useState({});
@@ -132,6 +133,25 @@ const App = () => {
 
 
     return (<>
+            <Breadcrumb
+                style={{marginBottom: 15}}
+                items={[
+                    {
+                        href: '/',
+                        title: <HomeOutlined/>,
+                    },
+                    {
+                        href: '/articles',
+                        title: (
+                            <>
+                                <BookOutlined/>
+                                <span>文章列表</span>
+                            </>
+                        ),
+                    },
+
+                ]}
+            />
             <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Link to={`/articles/create`}><Button style={{marginBottom: 10}}>新增一篇文章</Button></Link>
                 <SearchBox onChange={handleSearch} loading={loading}/>

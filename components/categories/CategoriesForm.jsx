@@ -1,7 +1,15 @@
 import React, {useEffect} from 'react';
-import {Button, Form, Input, message} from 'antd';
+import {Breadcrumb, Button, Form, Input, message} from 'antd';
 import {createCategory, fetchCategory, updateCategory} from "../../src/api/categories.js";
 import {useNavigate, useParams} from "react-router-dom";
+import {
+    AlignCenterOutlined,
+    EditOutlined,
+    HomeOutlined,
+    PlusCircleOutlined,
+    UserOutlined,
+    YoutubeOutlined
+} from "@ant-design/icons";
 
 const rules = {
     name: [{required: true, message: "请填写分类名!"}],
@@ -38,7 +46,50 @@ const App = (props) => {
     }
 
     return (<>
-
+        <Breadcrumb
+            style={{marginBottom: 15}}
+            items={[
+                {
+                    href: '/',
+                    title: <HomeOutlined/>,
+                },
+                {
+                    href: '',
+                    title: (
+                        <>
+                            <YoutubeOutlined/>
+                            <span>视频管理</span>
+                        </>
+                    ),
+                },
+                {
+                    href: '/categories',
+                    title: (
+                        <>
+                            <AlignCenterOutlined/>
+                            <span>分类列表</span>
+                        </>
+                    ),
+                },
+                props.isEdit ? {
+                    href: `/categories/edit/${params.id}`,
+                    title: (
+                        <>
+                            <EditOutlined/>
+                            <span>分类编辑</span>
+                        </>
+                    ),
+                } : {
+                    href: `/categories/create`,
+                    title: (
+                        <>
+                            <PlusCircleOutlined/>
+                            <span>分类新增</span>
+                        </>
+                    ),
+                }
+            ]}
+        />
         <Form
             form={formData}
             name="wrap"
