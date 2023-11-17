@@ -6,6 +6,9 @@ import {Link} from "react-router-dom";
 import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
+import SearchBox from "../../../components/common/SearchBox.jsx";
+import {fetchArticleList} from "../../api/articles.js";
+import {fetchCourseList} from "../../api/courses.js";
 
 const App = () => {
     const [pagination, setPagination] = useState({});
@@ -33,6 +36,20 @@ const App = () => {
             currentPage: page,
             pageSize: pageSize
         })
+    }
+
+    const handleSearch = async (searchText) => {
+        try {
+            setLoading(true);
+            const res = await fetchCategoryList({...pageParams, name: searchText});
+            setCategories(res.data.categories);
+            setPagination(res.data.pagination);
+            setLoading(false)
+        } catch (error) {
+            message.error('Search failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     }
 
     const confirmDelete = async (id) => {
@@ -150,7 +167,10 @@ const App = () => {
 
 
     return (<>
-            <Link to={`/categories/create`}><Button style={{marginBottom: 10}}>新增一个分类</Button></Link>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <Link to={`/categories/create`}><Button style={{marginBottom: 10}}>新增一个分类</Button></Link>
+                <SearchBox onChange={handleSearch} loading={loading}></SearchBox>
+            </div>
             <Table columns={columns}
                    dataSource={categories.map(category => ({
                        ...category, key: category.id

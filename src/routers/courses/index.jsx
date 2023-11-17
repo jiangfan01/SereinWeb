@@ -8,6 +8,8 @@ import {deleteCourse, fetchCourseList, updateCourse} from "../../api/courses.js"
 import CountUp from "react-countup";
 import {LikeOutlined, TeamOutlined} from "@ant-design/icons";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
+import SearchBox from "../../../components/common/SearchBox.jsx";
+import {fetchCategoryList} from "../../api/categories.js";
 
 const App = () => {
     const [loading, setLoading] = useState(false)
@@ -60,6 +62,20 @@ const App = () => {
             currentPage: page,
             pageSize: pageSize
         })
+    }
+
+    const handleSearch = async (searchText) => {
+        try {
+            setLoading(true);
+            const res = await fetchCourseList({...pageParams, name: searchText});
+            setCourses(res.data.courses);
+            setPagination(res.data.pagination);
+            setLoading(false)
+        } catch (error) {
+            message.error('Search failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     }
 
     const confirmDelete = async (id) => {
@@ -272,7 +288,10 @@ const App = () => {
     ];
 
     return (<>
-            <Link to={`/courses/create`}><Button style={{marginBottom: 10}}>新增一篇课程</Button></Link>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <Link to={`/courses/create`}><Button style={{marginBottom: 10}}>新增一篇课程</Button></Link>
+                <SearchBox onChange={handleSearch} loading={loading}></SearchBox>
+            </div>
             <Table
                 columns={columns}
                 dataSource={courses.map(course => ({

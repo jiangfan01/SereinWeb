@@ -6,6 +6,7 @@ import {Link, useParams} from "react-router-dom";
 import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
+import SearchBox from "../../../components/common/SearchBox.jsx";
 
 const App = () => {
     const [pagination, setPagination] = useState({});
@@ -38,6 +39,20 @@ const App = () => {
 
     const confirmDelete = async (id) => {
         return await deleteArticle(id);
+    };
+
+    const handleSearch = async (searchText) => {
+        try {
+            setLoading(true);
+            const res = await fetchArticleList({...pageParams, title: searchText});
+            setArticles(res.data.articles);
+            setPagination(res.data.pagination);
+            setLoading(false)
+        } catch (error) {
+            message.error('Search failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const columns = [
@@ -117,7 +132,10 @@ const App = () => {
 
 
     return (<>
-            <Link to={`/articles/create`}><Button style={{marginBottom: 10}}>新增一篇文章</Button></Link>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <Link to={`/articles/create`}><Button style={{marginBottom: 10}}>新增一篇文章</Button></Link>
+                <SearchBox onChange={handleSearch} loading={loading}/>
+            </div>
             <Table columns={columns}
                    dataSource={articles.map(article => ({
                        ...article, key: article.id

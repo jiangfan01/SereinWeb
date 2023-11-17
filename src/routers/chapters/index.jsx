@@ -6,6 +6,8 @@ import {deleteChapter, fetchChapterList, updateChapter} from "../../api/chapters
 import Pagination from "../../../components/common/Pagination.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import formatDate from "../../../utils/formatDate.js";
+import SearchBox from "../../../components/common/SearchBox.jsx";
+import {fetchCategoryList} from "../../api/categories.js";
 
 
 const App = () => {
@@ -18,11 +20,10 @@ const App = () => {
     const [pageParams, setPageParams] = useState({
         courseId,
         pageSize: 10,
-        page:1
+        page: 1
     });
 
     const init = async () => {
-        console.log(321312, params)
         setLoading(true)
         const res = await fetchChapterList(pageParams)
         if (res.code !== 200) {
@@ -54,6 +55,20 @@ const App = () => {
             currentPage: page,
             pageSize
         })
+    }
+
+    const handleSearch = async (searchText) => {
+        try {
+            setLoading(true);
+            const res = await fetchChapterList({...pageParams, title: searchText});
+            setChapters(res.data.chapters);
+            setPagination(res.data.pagination);
+            setLoading(false)
+        } catch (error) {
+            message.error('Search failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     }
 
     const confirmDelete = async (id) => {
@@ -193,7 +208,10 @@ const App = () => {
 
     return (
         <>
-            <Link to={`/chapters/create`}><Button style={{marginBottom: 10}}>新增一篇章节</Button></Link>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <Link to={`/chapters/create`}><Button style={{marginBottom: 10}}>新增一篇章节</Button></Link>
+                <SearchBox onChange={handleSearch} loading={loading}/>
+            </div>
             <Table columns={columns}
                    dataSource={chapters.map(chapter => ({
                        ...chapter, key: chapter.id
