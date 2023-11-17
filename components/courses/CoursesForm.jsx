@@ -4,16 +4,16 @@ import {
     Button,
     Form, Input, message,
     Select,
-    Space,
+    Space, Switch,
     Upload,
 } from 'antd';
-import {fetchCategoryList} from "../../api/categories.js";
+import {fetchCategoryList} from "../../src/api/categories.js";
 import {v4 as uuidv4} from 'uuid';
-import {fetchUserList} from "../../api/user.js";
-import {createCourse, fetchCourse, updateCourse} from "../../api/courses.js";
+import {fetchUserList} from "../../src/api/user.js";
+import {createCourse, fetchCourse, updateCourse} from "../../src/api/courses.js";
 import {useNavigate, useParams} from "react-router-dom";
 import TextArea from "antd/es/input/TextArea.js";
-import {uploadToken} from "../../api/upload.js";
+import {uploadToken} from "../../src/api/upload.js";
 
 const {Option} = Select;
 
@@ -85,7 +85,9 @@ const App = (props) => {
         let res
         values = {
             ...values,
-            image: imageUrl
+            image: imageUrl,
+            recommended: values.recommended || false,
+            introductory: values.introductory || false,
         }
         if (props.isEdit) {
             res = await updateCourse(params.id, values)
@@ -96,6 +98,7 @@ const App = (props) => {
             return message.error(res.message)
         }
         navigate("/courses")
+        message.success(res.message)
     };
 
 
@@ -156,8 +159,17 @@ const App = (props) => {
         init().then()
     }, [])
 
+    const breadcrumbLabel = props.isEdit ? '课程编辑' : '新增课程';
+
     return (
         <>
+            <CustomBreadcrumb
+                routes={[
+                    {path: '/', label: '首页'},
+                    {path: '/courses', label: '分类列表'},
+                    {path: `/courses/edit/${params.id}`, label: breadcrumbLabel},
+                ]}
+            />
             <Form
                 form={formData}
                 name="wrap"
@@ -225,6 +237,26 @@ const App = (props) => {
                         )}
                     </Upload>
                 </Form.Item>
+
+                {props.isEdit ? null : (
+                    <>
+                        <Form.Item
+                            label="推荐课程"
+                            name="recommended"
+                            valuePropName="checked"
+                        >
+                            <Switch/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="介绍"
+                            name="introductory"
+                            valuePropName="checked"
+                        >
+                            <Switch/>
+                        </Form.Item>
+                    </>
+                )}
 
                 <Form.Item
                     label="内容"
