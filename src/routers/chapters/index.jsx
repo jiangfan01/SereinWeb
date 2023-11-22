@@ -122,12 +122,13 @@ const App = () => {
             align: 'center',
             render: (video) => {
                 const title = `视频地址:${video}`
+
                 if (!video) {
                     return "无";
                 }
                 return (
                     <CustomTooltip title={title}>
-                        {video}
+                        <span className="custom-tooltip" >{video}</span>
                     </CustomTooltip>
                 );
             },
@@ -238,7 +239,7 @@ const App = () => {
                         href: '/chapters',
                         title: (
                             <>
-                                <BarcodeOutlined />
+                                <BarcodeOutlined/>
                                 <span>章节列表</span>
                             </>
                         ),

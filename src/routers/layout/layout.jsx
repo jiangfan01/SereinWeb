@@ -9,10 +9,11 @@ import {
     AlignCenterOutlined,
     YoutubeOutlined,
     BookOutlined,
-    FileTextOutlined,
+    FileTextOutlined, SettingOutlined, UserOutlined, AntDesignOutlined,
 } from '@ant-design/icons';
-import {Layout, Menu, Button, theme} from 'antd';
+import {Layout, Menu, Button, theme, Avatar} from 'antd';
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import LogOut from "../../../components/layout/LogOut.jsx";
 
 const {Header, Sider, Content} = Layout;
 const App = () => {
@@ -41,42 +42,43 @@ const App = () => {
             getItem('分类管理', '/categories', <AlignCenterOutlined/>),
             getItem('课程管理', '/courses', <FileTextOutlined/>),
         ]),
-        getItem('Team', 'sub2', <TeamOutlined/>, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-        getItem('Files', '9', <FileOutlined/>),
+
+        getItem('系统设置', 'user', <SettingOutlined/>, [
+            getItem('用户管理', '/users', <UserOutlined/>),
+            // getItem('其他设置', '/courses', <FileTextOutlined/>),
+        ]),
+
     ];
     // 路由跳转
     const onClick = (e) => {
         navigate(e.key);
     };
     return (
-        <Layout>
+        <Layout style={{minHeight: '100vh', display: 'flex'}}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="demo-logo-vertical"/>
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={['1']}
-                    onClick={onClick}
-                    items={items}
-                />
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} onClick={onClick} items={items}/>
             </Sider>
-            <Layout>
+            <Layout style={{flex: 1}}>
                 <Header
                     style={{
                         padding: 0,
                         background: colorBgContainer,
                     }}
                 >
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
+                    <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                        <Button
+                            type="text"
+                            icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
+                            onClick={() => setCollapsed(!collapsed)}
+                            style={{
+                                fontSize: '16px',
+                                width: 64,
+                                height: 64,
+                            }}
+                        />
+                        <LogOut />
+                    </div>
                 </Header>
                 <Content
                     style={{
@@ -84,9 +86,9 @@ const App = () => {
                         padding: 24,
                         minHeight: 280,
                         background: colorBgContainer,
+                        overflow: 'auto', // 添加overflow属性
                     }}
                 >
-                    {/*路由出口*/}
                     <Outlet/>
                 </Content>
             </Layout>

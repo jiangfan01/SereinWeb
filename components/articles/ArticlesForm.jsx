@@ -1,8 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Breadcrumb, Button, Form, Input, message} from 'antd';
 import {createArticle, fetchArticle, updateArticle} from "../../src/api/articles.js";
 import {useNavigate, useParams} from "react-router-dom";
-import {BookOutlined, EditOutlined, HomeOutlined, PlusCircleOutlined, UserOutlined} from "@ant-design/icons";
+import {BookOutlined, EditOutlined, HomeOutlined, PlusCircleOutlined,} from "@ant-design/icons";
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+import MarkdownIt from 'markdown-it';
 
 const rules = {
     title: [{required: true, message: "请填写文章标题!"}],
@@ -14,17 +17,12 @@ const App = (props) => {
     const navigate = useNavigate();
     const [formData] = Form.useForm();
     const {id} = useParams();
+    const [contentHtml, setContentHtml] = useState("")
+    const [content, setContent] = useState("")
     const init = async () => {
         const res = await fetchArticle(params.id)
         formData.setFieldsValue(res.data.article)
     }
-
-    useEffect(() => {
-        if (props.isEdit) {
-            init().then()
-        }
-    }, [id])
-
 
     const onFinish = async (v) => {
         let res
@@ -39,6 +37,26 @@ const App = (props) => {
         message.success(res.message)
         navigate("/articles")
     }
+
+    const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+    const handleEditorChange = ({html, text}) => {
+        setContentHtml(html)
+        setContent(text)
+    }
+
+    const renderHTML = (text) => {
+        // 模拟异步渲染Markdown
+        return new Promise((resolve) => {
+            resolve(mdParser.render(text))
+        })
+    }
+
+    useEffect(() => {
+        if (props.isEdit) {
+            init().then()
+        }
+    }, [id])
 
     return (<>
         <Breadcrumb
@@ -109,6 +127,14 @@ const App = (props) => {
                 rules={rules.content}
             >
                 <Input/>
+            </Form.Item>
+
+            <Form.Item
+                label="文章内容"
+            >
+                <MdEditor value={content} style={{height: '500px', paddingLeft: "50"}} renderHTML={renderHTML}
+                          onChange={handleEditorChange}
+                />
             </Form.Item>
 
             <Form.Item label=" "

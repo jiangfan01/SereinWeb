@@ -6,7 +6,7 @@ const Pagination = ({total, onChange}) => {
         <AntPagination
             style={{
                 position: "absolute",
-                bottom: 35,
+                bottom: 20,
                 right: 50
             }}
             showSizeChanger

@@ -170,7 +170,6 @@ const App = (props) => {
         init().then()
     }, [])
 
-    const breadcrumbLabel = props.isEdit ? '课程编辑' : '新增课程';
 
     return (
         <>

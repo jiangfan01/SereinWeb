@@ -73,26 +73,26 @@ html, body {
     color: #4096ff;
 }
 
-/*.charts{*/
-/*    display: flex;*/
-/*    justify-content: space-around;*/
-/*}*/
-
 .sex-charts {
     height: 500px;
-    width: 1000px;
+    width: 500px;
     margin-bottom: 30px;
 }
 
 .course-charts {
     height: 500px;
-    width: 1000px;
+    width: 500px;
     margin-bottom: 30px;
 }
 
 .article-charts {
     height: 500px;
-    width: 1000px;
+    width: 500px;
+}
+
+#user-chart {
+    height: 500px;
+    width: 500px;
 }
 
 :where(.css-dev-only-do-not-override-sk7ap8).ant-select:where(.css-dev-only-do-not-override-sk7ap8).ant-select-in-form-item {
@@ -109,3 +109,7 @@ html, body {
     text-align: center;
 }
 
+.custom-tooltip {
+    display: block;
+    /*white-space: nowrap;*/
+}

@@ -1,0 +1,19 @@
+.register-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to right, #5a3f5d, #2d3446);
+}
+
+.register-form {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+    width: 500px; /* 调整宽度 */
+}
+
+.login-form-button {
+    width: 100%;
+}

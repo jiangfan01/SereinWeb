@@ -1,25 +1,17 @@
-import {Link} from "react-router-dom";
-import {Breadcrumb, Button, Col, Image, message, Space, Switch, Table, Tag, Tooltip} from "antd";
-import Pagination from "../../../components/common/Pagination.jsx";
+import {Avatar, Breadcrumb, Button, Image, message, Space, Switch, Table, Tag, Tooltip} from "antd";
+import {HomeOutlined, UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
-import formatDate from "../../../utils/formatDate.js";
-import DeleteButton from "../../../components/common/DeleteButton.jsx";
-import {deleteCourse, fetchCourseList, updateCourse} from "../../api/courses.js";
-import CountUp from "react-countup";
-import {
-    FileTextOutlined,
-    HomeOutlined,
-    LikeOutlined,
-    TeamOutlined,
-    UserOutlined,
-    YoutubeOutlined
-} from "@ant-design/icons";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
+import formatDate from "../../../utils/formatDate.js";
+import {Link} from "react-router-dom";
+import DeleteButton from "../../../components/common/DeleteButton.jsx";
+import {deleteUser, fetchUserList, updateUser} from "../../api/user.js";
 import SearchBox from "../../../components/common/SearchBox.jsx";
+import Pagination from "../../../components/common/Pagination.jsx";
 
 const App = () => {
+    const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(false)
-    const [courses, setCourses] = useState([])
     const [pagination, setPagination] = useState({})
     const [pageParams, setPageParams] = useState({
         currentPage: 1,
@@ -28,53 +20,21 @@ const App = () => {
 
     const init = async () => {
         setLoading(true)
-        const res = await fetchCourseList(pageParams)
-        setCourses(res.data.courses)
+        const res = await fetchUserList(pageParams)
+        setUsers(res.data.users)
         setPagination(res.data.pagination)
         setLoading(false)
-        if (res.code !== 200) {
-            message.error(res.message)
-        }
     }
 
-    const recommendedChange = async (record, e) => {
-        const res = await updateCourse(record.id, {
-            categoryId: record.categoryId,
-            userId: record.userId,
-            recommended: e
-        })
-        if (res.code !== 200) {
-            return message.error(res.message)
-        }
-        message.success(res.message)
-        init().then()
-    }
-    const introductoryChange = async (record, e) => {
-        const res = await updateCourse(record.id, {
-            categoryId: record.categoryId,
-            userId: record.userId,
-            introductory: e
-        })
-        if (res.code !== 200) {
-            return message.error(res.message)
-        }
-        message.success(res.message)
-        init().then()
-    }
-
-    //页面发生变化
-    const onChange = (page, pageSize) => {
-        setPageParams({
-            currentPage: page,
-            pageSize: pageSize
-        })
+    const confirmDelete = async (id) => {
+        await deleteUser(id)
     }
 
     const handleSearch = async (searchText) => {
         try {
             setLoading(true);
-            const res = await fetchCourseList({...pageParams, name: searchText});
-            setCourses(res.data.courses);
+            const res = await fetchUserList({...pageParams, username: searchText});
+            setUsers(res.data.users);
             setPagination(res.data.pagination);
             setLoading(false)
         } catch (error) {
@@ -84,14 +44,16 @@ const App = () => {
         }
     }
 
-    const confirmDelete = async (id) => {
-        return await deleteCourse(id);
-    };
+    const onChange = (page, pageSize) => {
+        setPageParams({
+            currentPage: page,
+            pageSize: pageSize
+        })
+    }
 
     useEffect(() => {
         init().then()
     }, [pageParams])
-
 
     const columns = [
         {
@@ -112,20 +74,37 @@ const App = () => {
             align: 'center',
         },
         {
-            title: '图片',
-            dataIndex: 'image',
-            key: 'image',
+            title: '用户名',
+            dataIndex: 'username',
+            key: 'username',
             align: 'center',
-            render: (image, record) => (
+            render: (username) => {
+                const otherTitle = `用户名:${username}`
+                if (!username) {
+                    return "无";
+                }
+                return (
+                    <CustomTooltip title={otherTitle}>
+                        {username}
+                    </CustomTooltip>
+                );
+            },
+        },
+        {
+            title: '头像',
+            dataIndex: 'avatar',
+            key: 'avatar',
+            align: 'center',
+            render: (avatar, record) => (
                 <Space size={12}>
-                    {image ? (
+                    {avatar ? (
                         <Tooltip title="查看">
                             <Image
                                 placeholder={true}
                                 width={80}
                                 height={80}
-                                style={{borderRadius: 10}}
-                                src={image}
+                                style={{borderRadius: 50}}
+                                src={avatar}
                             />
                         </Tooltip>
                     ) : (
@@ -134,6 +113,7 @@ const App = () => {
                                 width={80}
                                 height={80}
                                 src="error"
+                                style={{borderRadius: 50}}
                                 fallback="data:image/png;base64,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"
                             />
                         </Tooltip>
@@ -142,125 +122,115 @@ const App = () => {
             ),
         },
         {
-            title: '课程名',
-            dataIndex: 'name',
-            key: 'name',
-            align: 'center',
-            render: (name) => {
-                const title = `所属分类:${name}`
-                if (!name) {
+            title: '性别',
+            dataIndex: 'sex',
+            key: 'sex',
+            align: 'sex',
+            render: (sex) => {
+                const genderText = sex === 1 ? '男' : sex === 0 ? '女' : '无';
+                const otherTitle = `性别:${genderText}`
+                if (!genderText) {
                     return "无";
                 }
                 return (
-                    <CustomTooltip title={title}>
-                        {name}
+                    sex ? <CustomTooltip title={otherTitle}>
+                            <Tag bordered={false} color="processing">
+                                {genderText}
+
+                            </Tag>
+                        </CustomTooltip>
+                        : <CustomTooltip title={otherTitle}>
+                            <Tag bordered={false} color="error">
+                                {genderText}
+                            </Tag>
+                        </CustomTooltip>
+                )
+                    ;
+            },
+        },
+        {
+            title: '邮箱',
+            dataIndex: 'email',
+            key: 'email',
+            align: 'center',
+            render: (email) => {
+                const otherTitle = `邮箱地址:${email}`
+                if (!email) {
+                    return "无";
+                }
+                return (
+                    <CustomTooltip title={otherTitle}>
+                        {email}
                     </CustomTooltip>
                 );
             },
         },
         {
-            title: '所属分类',
-            dataIndex: 'category',
-            key: 'category',
-            align: 'center',
-            render: (category) => {
-                const title = `所属分类:${category.name}`
-                if (!category) {
+            title: '公司/学校',
+            dataIndex: 'company',
+            key: 'company',
+            render: (company) => {
+                const title = `公司/学校:${company}`
+                if (!company) {
                     return "无";
                 }
                 return (
                     <CustomTooltip title={title}>
-                        {category.name}
+                        {company}
                     </CustomTooltip>
                 );
             },
+            align: 'center',
         },
         {
-            title: '所属老师',
-            dataIndex: 'user',
-            key: 'user',
-            align: 'center',
-            render: (user) => {
-                const title = `所属老师:${user.username}`
-                if (!user) {
+            title: '个人签名',
+            dataIndex: 'signature',
+            key: 'signature',
+            render: (signature) => {
+                const title = `公司/学校:${signature}`
+                if (!signature) {
                     return "无";
                 }
                 return (
                     <CustomTooltip title={title}>
-                        <TeamOutlined style={{marginRight: 8}}/> {user.username}
+                        {signature}
                     </CustomTooltip>
                 );
             },
+            align: 'center',
         },
         {
-            title: '推荐',
-            dataIndex: 'recommended',
-            key: 'recommended',
+            title: '是否管理员',
+            dataIndex: 'isAdmin',
+            key: 'isAdmin',
             align: 'center',
             render: (_, record) => (
-                <Switch defaultChecked={record.recommended || false} onChange={(e) => recommendedChange(record, e)}/>
+                <Switch defaultChecked={record.isAdmin || false} disabled={true}/>
             ),
-        },
-        {
-            title: '人气',
-            dataIndex: 'introductory',
-            key: 'introductory',
-            align: 'center',
-            render: (_, record) => (
-                <Switch defaultChecked={record.introductory || false} onChange={(e) => introductoryChange(record, e)}/>
-            ),
-        },
-        {
-            title: '点赞数',
-            dataIndex: 'likesCount',
-            key: 'likesCount',
-            align: 'center',
-            render: (_, record) => {
-                const likesCount = record.likesCount || 0;
-                const title = `点赞数: ${likesCount}`;
-                return (
-                    <CustomTooltip title={title}>
-                        <Tag color={"geekblue"} bordered={false}>
-                            <Col
-                                span={30}
-                                style={{
-                                    width: 60,
-                                    height: 30,
-                                    display: "flex",
-                                    justifyContent: "space-around",
-                                    alignItems: "center"
-                                }}
-                            >
-                                <LikeOutlined style={{flex: 1}}/>
-                                <CountUp end={likesCount} duration={2} separator=","/>
-                            </Col>
-                        </Tag>
-                    </CustomTooltip>
-                );
-            }
         },
         {
             title: '创建时间',
             dataIndex: 'createdAt',
             key: 'createdAt',
+            render: (createdAt => formatDate(createdAt)),
             align: 'center',
         },
         {
             title: '修改时间',
             dataIndex: 'updatedAt',
             key: 'updatedAt',
-            align: 'center',
             render: (updatedAt) => {
                 if (!updatedAt) {
                     return "无";
                 }
                 const formattedDate = formatDate(updatedAt);
                 return (
-                    <Tooltip title={`修改时间: ${formattedDate}`}>
+                    <CustomTooltip title={`修改时间: ${formattedDate}`}>
                         {formattedDate}
-                    </Tooltip>
+                    </CustomTooltip>
                 );
-            }
+            },
+            align: 'center',
         },
         {
             title: '操作',
@@ -268,32 +238,19 @@ const App = () => {
             align: 'center',
             render: (_, record) => (
                 <Space size="middle">
-                    <Tooltip title={"编辑课程"}>
-                        <Link to={`/courses/edit/${record.id}`}>
+                    <CustomTooltip title={"编辑"}>
+                        <Link to={`/users/edit/${record.id}`}>
                             编辑
                         </Link>
-                    </Tooltip>
+                    </CustomTooltip>
                     <DeleteButton onConfirm={confirmDelete} props={{init}} id={record.id}/>
-                </Space>
-            ),
-        },
-        {
-            title: '章节视频',
-            key: 'action',
-            align: 'center',
-            render: (_, record) => (
-                <Space size="middle">
-                    <Tooltip title="查看章节视频">
-                        <Link to={`/chapters?courseId=${record.id}`}>
-                            查看
-                        </Link>
-                    </Tooltip>
                 </Space>
             ),
         },
     ];
 
-    return (<>
+    return (
+        <>
             <Breadcrumb
                 style={{marginBottom: 15}}
                 items={[
@@ -302,36 +259,26 @@ const App = () => {
                         title: <HomeOutlined/>,
                     },
                     {
-                        href: '',
+                        href: '/users',
                         title: (
                             <>
-                                <YoutubeOutlined/>
-                                <span>视频管理</span>
+                                <UserOutlined/>
+                                <span>用户列表</span>
                             </>
                         ),
                     },
-                    {
-                        href: '/courses',
-                        title: (
-                            <>
-                                <FileTextOutlined/>
-                                <span>课程列表</span>
-                            </>
-                        ),
-                    },
+
                 ]}
             />
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-                <Link to={`/courses/create`}><Button style={{marginBottom: 10}}>新增一篇课程</Button></Link>
+            <div style={{float: "right"}}>
                 <SearchBox onChange={handleSearch} loading={loading}></SearchBox>
             </div>
-            <Table
-                columns={columns}
-                dataSource={courses.map(course => ({
-                    ...course, key: course.id
-                }))}
-                loading={loading}
-                pagination={false}
+            <Table columns={columns}
+                   dataSource={users.map(user => ({
+                       ...user, key: user.id
+                   }))}
+                   loading={loading}
+                   pagination={false}
             >
             </Table>
             <Pagination total={pagination.total} onChange={onChange}></Pagination>
