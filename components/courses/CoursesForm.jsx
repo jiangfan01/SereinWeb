@@ -2,11 +2,9 @@ import {
     EditOutlined,
     FileTextOutlined,
     HomeOutlined,
-    InboxOutlined,
     LoadingOutlined, PlusCircleOutlined,
     PlusOutlined,
-    UploadOutlined,
-    UserOutlined, YoutubeOutlined
+    YoutubeOutlined
 } from '@ant-design/icons';
 import React, {useEffect, useState} from 'react';
 import {

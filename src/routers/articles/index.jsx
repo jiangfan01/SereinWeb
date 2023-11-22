@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, message, Popconfirm, Space, Table,} from 'antd';
+import {Breadcrumb, Button, message, Space, Table,} from 'antd';
 import {deleteArticle, fetchArticleList} from "../../api/articles.js";
 import formatDate from "../../../utils/formatDate.js";
-import {Link, useParams} from "react-router-dom";
+import {Link,} from "react-router-dom";
 import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";

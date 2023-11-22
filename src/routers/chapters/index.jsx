@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, InputNumber, message, Space, Table, Tag, Tooltip} from 'antd';
+import {Breadcrumb, Button, InputNumber, message, Space, Table,} from 'antd';
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import {Link, useParams, useSearchParams} from "react-router-dom";
 import {deleteChapter, fetchChapterList, updateChapter} from "../../api/chapters.js";
@@ -7,8 +7,7 @@ import Pagination from "../../../components/common/Pagination.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import formatDate from "../../../utils/formatDate.js";
 import SearchBox from "../../../components/common/SearchBox.jsx";
-import {fetchCategoryList} from "../../api/categories.js";
-import {BarcodeOutlined, FileTextOutlined, HomeOutlined, UserOutlined, YoutubeOutlined} from "@ant-design/icons";
+import {BarcodeOutlined, FileTextOutlined, HomeOutlined, YoutubeOutlined} from "@ant-design/icons";
 
 
 const App = () => {

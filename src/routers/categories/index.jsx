@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Breadcrumb, Button, Input, InputNumber, message, Popconfirm, Space, Table, Tooltip,} from 'antd';
+import {Breadcrumb, Button, Input, InputNumber, message, Space, Table, Tooltip,} from 'antd';
 import {deleteCategory, fetchCategoryList, updateCategory} from "../../api/categories.js";
 import formatDate from "../../../utils/formatDate.js";
 import {Link} from "react-router-dom";
@@ -7,9 +7,7 @@ import Pagination from "../../../components/common/Pagination.jsx";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import SearchBox from "../../../components/common/SearchBox.jsx";
-import {fetchArticleList} from "../../api/articles.js";
-import {fetchCourseList} from "../../api/courses.js";
-import {AlignCenterOutlined, HomeOutlined, UserOutlined, YoutubeOutlined} from "@ant-design/icons";
+import {AlignCenterOutlined, HomeOutlined, YoutubeOutlined} from "@ant-design/icons";
 
 const App = () => {
     const [pagination, setPagination] = useState({});

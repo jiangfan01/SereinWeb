@@ -1,5 +1,5 @@
 import * as echarts from 'echarts/core';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,} from 'react';
 import {articlesCharts} from '../../src/api/charts.js';
 
 const App = () => {

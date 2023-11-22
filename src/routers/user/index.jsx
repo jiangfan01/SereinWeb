@@ -1,11 +1,11 @@
-import {Avatar, Breadcrumb, Button, Image, message, Space, Switch, Table, Tag, Tooltip} from "antd";
+import {Breadcrumb, Image, message, Space, Switch, Table, Tag, Tooltip} from "antd";
 import {HomeOutlined, UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import formatDate from "../../../utils/formatDate.js";
 import {Link} from "react-router-dom";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
-import {deleteUser, fetchUserList, updateUser} from "../../api/user.js";
+import {deleteUser, fetchUserList} from "../../api/user.js";
 import SearchBox from "../../../components/common/SearchBox.jsx";
 import Pagination from "../../../components/common/Pagination.jsx";
 

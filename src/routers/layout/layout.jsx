@@ -1,17 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import React, {useState} from 'react';
 import {
-    FileOutlined,
-    TeamOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     HomeOutlined,
     AlignCenterOutlined,
     YoutubeOutlined,
     BookOutlined,
-    FileTextOutlined, SettingOutlined, UserOutlined, AntDesignOutlined,
+    FileTextOutlined, SettingOutlined, UserOutlined,
 } from '@ant-design/icons';
-import {Layout, Menu, Button, theme, Avatar} from 'antd';
+import {Layout, Menu, Button, theme} from 'antd';
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import LogOut from "../../../components/layout/LogOut.jsx";
 

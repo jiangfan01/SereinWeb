@@ -3,7 +3,6 @@ import {
     FileTextOutlined,
     HomeOutlined, PlusCircleOutlined,
     UploadOutlined,
-    UserOutlined,
     YoutubeOutlined
 } from '@ant-design/icons';
 import React, {useEffect, useState} from 'react';
