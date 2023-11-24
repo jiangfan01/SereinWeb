@@ -43,7 +43,6 @@ const App = () => {
 
         getItem('系统设置', 'user', <SettingOutlined/>, [
             getItem('用户管理', '/users', <UserOutlined/>),
-            // getItem('其他设置', '/courses', <FileTextOutlined/>),
         ]),
 
     ];

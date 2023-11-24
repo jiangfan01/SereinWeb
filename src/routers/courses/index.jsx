@@ -181,13 +181,14 @@ const App = () => {
             key: 'user',
             align: 'center',
             render: (user) => {
-                const title = `所属老师:${user.username}`
-                if (!user) {
+                const title = `所属老师:${user?.username}`;
+                if (!user || !user.username) {
                     return "无";
                 }
+
                 return (
                     <CustomTooltip title={title}>
-                        <TeamOutlined style={{marginRight: 8}}/> {user.username}
+                        <TeamOutlined style={{marginRight: 8}}/> {user?.username}
                     </CustomTooltip>
                 );
             },

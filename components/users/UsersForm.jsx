@@ -125,7 +125,7 @@ const App = (props) => {
             avatar: imageUrl
         }
         const res = await updateUser(params.id, values)
-        if (res.code !== 20000) {
+        if (res.code !== 200) {
             return message.error(res.message)
         }
         message.success(res.message)

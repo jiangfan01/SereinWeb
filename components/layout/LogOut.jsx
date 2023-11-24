@@ -5,7 +5,7 @@ import {getToken, removeToken} from "../../utils/auth.js";
 import {getInfoMe} from "../../src/api/auth.js";
 import {useNavigate} from "react-router-dom";
 
-const App = (collapsed) => {
+const App = () => {
 
     const [avatar, setAvatar] = useState("")
     const [username, setUsername] = useState("")
@@ -27,7 +27,7 @@ const App = (collapsed) => {
 
     const init = async () => {
         const token = getToken()
-        const res = await getInfoMe(token)
+        const res = await getInfoMe({token: token})
         if (res.code !== 200) {
             return message.error(res.message)
         }

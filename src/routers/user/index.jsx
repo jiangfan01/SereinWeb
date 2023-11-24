@@ -3,13 +3,16 @@ import {HomeOutlined, UserOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import CustomTooltip from "../../../components/common/CustomTooltip.jsx";
 import formatDate from "../../../utils/formatDate.js";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import DeleteButton from "../../../components/common/DeleteButton.jsx";
 import {deleteUser, fetchUserList} from "../../api/user.js";
 import SearchBox from "../../../components/common/SearchBox.jsx";
 import Pagination from "../../../components/common/Pagination.jsx";
+import {getToken, removeToken} from "../../../utils/auth.js";
+import {getInfoMe} from "../../api/auth.js";
 
 const App = () => {
+    const navigate = useNavigate();
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(false)
     const [pagination, setPagination] = useState({})
@@ -17,16 +20,32 @@ const App = () => {
         currentPage: 1,
         pageSize: 10
     });
+    const [nowId, setNowId] = useState(0)
+
+    const token = getToken()
+
 
     const init = async () => {
         setLoading(true)
         const res = await fetchUserList(pageParams)
+        if (res.data.users.length === 0) {
+            navigate("/signUp")
+            removeToken()
+            return message.error("当前没有用户去请注册")
+        }
         setUsers(res.data.users)
         setPagination(res.data.pagination)
         setLoading(false)
     }
 
     const confirmDelete = async (id) => {
+        // 获取当前登录用户的信息，getInfoMe 返回一个包含用户信息的对象
+        const res = await getInfoMe({token: token});
+        setNowId(res.data.user.id)
+        if (nowId === id) {
+            return message.error("不能删除当前登录用户")
+        }
+
         await deleteUser(id)
     }
 

@@ -12,7 +12,7 @@ export function login(data) {
 // 邮箱注册
 export function emailLogin(data) {
     return request({
-        url: "/admin/users/emailLogin",
+        url: "/admin/auth/emailLogin",
         method: "post",
         data,
     });
@@ -21,7 +21,7 @@ export function emailLogin(data) {
 //发送邮件
 export function sendEmail(data) {
     return request({
-        url: "/admin/users/email",
+        url: "/admin/auth/email",
         method: "post",
         data,
     });

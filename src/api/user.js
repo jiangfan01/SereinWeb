@@ -42,11 +42,3 @@ export function deleteUser(id) {
         method: "delete",
     });
 }
-
-// 查询登录后用户信息、用户组、获得的权限
-export function getMe() {
-    return request({
-        url: "/admin/users/me",
-        method: "get",
-    });
-}

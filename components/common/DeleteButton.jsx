@@ -3,13 +3,13 @@ import {Popconfirm, message, Tooltip} from 'antd';
 
 const DeleteButton = ({onConfirm, props, id}) => {
     const handleConfirm = async () => {
-        try {
-            const res = await onConfirm(id);
+        const res = await onConfirm(id);
+        if (res && res.message) {
             message.success(res.message);
-            await props.init();
-        } catch (error) {
-            message.error('删除失败');
+        } else {
+            message.error("删除错误！！！")
         }
+        await props.init();
     };
     return (
         <Popconfirm
