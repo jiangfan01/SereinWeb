@@ -16,28 +16,6 @@ SereinWeb 是一个基于 **[React](https://reactjs.org/)** 的现代化 Web 应
 
 - **响应式布局：** 采用响应式设计，确保用户在不同设备上都能获得一致的良好体验。
 
-## 项目结构
-
-SereinWeb/
-│
-├── src/
-│ ├── components/
-│ │ ├── Header.js
-│ │ ├── Sidebar.js
-│ │ └── ...
-│ │
-│ ├── pages/
-│ │ ├── Dashboard.js
-│ │ ├── UserManagement.js
-│ │ └── ...
-│ │
-│ ├── App.js
-│ └── index.js
-│
-├── public/
-├── package.json
-└── README.md
-
 
 ## 快速开始
 
@@ -54,7 +32,7 @@ SereinWeb/
    # 启动项目 yarn dev
 
    ## 默认管理员
-   ### 账号：Root/1431037397@qq.com
-   ### 密码：123123 
+   # 账号：Root/1431037397@qq.com
+   # 密码：123123 
 
   
