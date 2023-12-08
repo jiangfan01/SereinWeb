@@ -1,6 +1,8 @@
-# React + Vite + ant desgin
 
-# SereinWeb 项目介绍
+# Serein视频web端 项目介绍
+
+## 技术栈:React + Vite + ant desgin
+
 
 ## 项目概述
 
