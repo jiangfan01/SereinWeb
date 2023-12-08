@@ -40,4 +40,4 @@ SereinWeb 是一个基于 **[React](https://reactjs.org/)** 的现代化 Web 应
 ## React脚手架 
 
    ``` bash
-   **[[React 文档](https://reactjs.org/)](https://reactrouter.com/en/main/start/tutorial)https://reactrouter.com/en/main/start/tutorial**
+   **[React文档](https://reactrouter.com/en/main/start/tutorial)**
