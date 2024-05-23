@@ -156,7 +156,7 @@ const App = (props) => {
             return;
         }
         if (info.file.status === "done") {
-            setImageUrl(`http://s49b16nfk.hn-bkt.clouddn.com/${info.file.response.key}`)
+            setImageUrl(`http://s5ni51avc.hn-bkt.clouddn.com/${info.file.response.key}`)
             setLoading(false);
         }
     };

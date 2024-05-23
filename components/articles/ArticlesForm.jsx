@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Breadcrumb, Button, Form, Input, message} from 'antd';
 import {createArticle, fetchArticle, updateArticle} from "../../src/api/articles.js";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {BookOutlined, EditOutlined, HomeOutlined, PlusCircleOutlined,} from "@ant-design/icons";
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
@@ -21,11 +21,17 @@ const App = (props) => {
     const [content, setContent] = useState("")
     const init = async () => {
         const res = await fetchArticle(params.id)
+        setContent(res.data.article.content)
         formData.setFieldsValue(res.data.article)
     }
 
     const onFinish = async (v) => {
         let res
+        v = {
+            ...v,
+            content,
+            contentHtml
+        }
         if (props.isEdit) {
             res = await updateArticle(params.id, v)
         } else {
@@ -81,7 +87,7 @@ const App = (props) => {
                         href: `/articles/edit/${params.id}`,
                         title: (
                             <>
-                                <EditOutlined />
+                                <EditOutlined/>
                                 <span>文章编辑</span>
                             </>
                         ),
@@ -89,7 +95,7 @@ const App = (props) => {
                         href: '/articles/create',
                         title: (
                             <>
-                                <PlusCircleOutlined />
+                                <PlusCircleOutlined/>
                                 <span>文章新增</span>
                             </>
                         ),
@@ -131,10 +137,25 @@ const App = (props) => {
 
             <Form.Item
                 label="文章内容"
+                wrapperCol={{
+                    // span: 6,
+                    offset: 1,
+                }}
             >
-                <MdEditor value={content} style={{height: '500px', paddingLeft: "50"}} renderHTML={renderHTML}
+                <MdEditor value={content} style={{height: '400px', marginLeft: "0"}} renderHTML={renderHTML}
                           onChange={handleEditorChange}
                 />
+            </Form.Item>
+
+            <Form.Item
+                wrapperCol={{
+                    span: 6,
+                    offset: 3,
+                }}
+            >
+                <Link to={`/show_article/${params.id}`}>
+                    <Button size="large">查看HTML页面</Button>
+                </Link>
             </Form.Item>
 
             <Form.Item label=" "

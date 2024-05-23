@@ -28,9 +28,12 @@ import UsersList from "./routers/user/index.jsx"
 import UsersCreate from "./routers/user/create.jsx"
 import UsersEdit from "./routers/user/edit.jsx"
 import Login from "./routers/auth/login.jsx";
+import ShowArticles from "./routers/pages/ShowArticles.jsx";
 import SignUp from "./routers/auth/signUp.jsx";
 import {ConfigProvider, message} from "antd";
 import {getToken} from "../utils/auth.js";
+import ShowChapters from "./routers/pages/ShowChapters.jsx";
+import {UserProvider} from "./context/UserContext.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -75,10 +78,20 @@ const router = createBrowserRouter([
             </LoginAuth>
     },
     {
+        path: "show_article/:id",
+        element: <ShowArticles/>,
+    },
+    {
+        path: "show_chapter/:id",
+        element: <ShowChapters/>,
+    },
+    {
         path: "/",
         element:
             <RequireAuth>
-                <Root/>,
+                <UserProvider>
+                    <Root/>,
+                </UserProvider>
             </RequireAuth>,
         errorElement: <ErrorPage/>,
         children: [

@@ -2,9 +2,10 @@ import {Button, Form, Input, Select, Upload, Switch, message, Breadcrumb} from '
 import {PlusOutlined, LoadingOutlined, HomeOutlined, UserOutlined, EditOutlined} from '@ant-design/icons';
 import {useNavigate, useParams} from "react-router-dom";
 import {fetchUser, updateUser} from "../../src/api/user.js";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {uploadToken} from "../../src/api/upload.js";
+import {UserContext} from "../../src/context/UserContext.jsx";
 
 const rules = {
     username: [{required: true, message: "请填写用户名!"}],
@@ -24,6 +25,11 @@ const App = (props) => {
         key: ""
     });
 
+    /*
+     * @description 初始化用户信息,使用context来进行跨组件更新信息
+     */
+    const {user, setUser, fetchUserInfo} = useContext(UserContext);
+
     /**
      * @description 查询单条
      */
@@ -41,6 +47,7 @@ const App = (props) => {
             ...uploadData,
             token: tokenRes.data.uploadToken
         });
+        console.log(tokenRes.data.uploadToken,123)
         if (tokenRes.code !== 200) {
             message.error(tokenRes.message)
         }
@@ -78,7 +85,8 @@ const App = (props) => {
             return;
         }
         if (info.file.status === "done") {
-            setImageUrl(`http://s49b16nfk.hn-bkt.clouddn.com/${info.file.response.key}`)
+            console.log(7777)
+            setImageUrl(`http://sdxsx9xbj.hn-bkt.clouddn.com/${info.file.response.key}`)
             setLoading(false);
         }
     }
@@ -128,8 +136,10 @@ const App = (props) => {
         if (res.code !== 200) {
             return message.error(res.message)
         }
+        setUser({...user, avatar: imageUrl, username: values.username}); // 更新用户上下文
         message.success(res.message)
         navigate("/users")
+
     };
 
 

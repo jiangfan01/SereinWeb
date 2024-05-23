@@ -16,9 +16,11 @@ import {
 } from 'antd';
 import {v4 as uuidv4} from 'uuid';
 import {fetchCourseList,} from "../../src/api/courses.js";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {uploadToken} from "../../src/api/upload.js";
 import {createChapter, fetchChapter, updateChapter} from "../../src/api/chapters.js";
+import MdEditor from "react-markdown-editor-lite";
+import MarkdownIt from "markdown-it";
 
 const {Option} = Select;
 
@@ -28,6 +30,10 @@ const App = (props) => {
     const [loading, setLoading] = useState(false)
     const [videoUrl, setVideoUrl] = useState("");
     const [courses, setCourses] = useState([])
+    const [contentHtml, setContentHtml] = useState("")
+    const [searchParams, setSearchParams] = useSearchParams();
+    const courseId = searchParams.get("courseId");
+    const [content, setContent] = useState("")
     const [formData] = Form.useForm();
     const [uploadData, setUploadData] = useState({
         token: "",
@@ -39,6 +45,7 @@ const App = (props) => {
     * 初始化分类和老师
     * */
     const init = async () => {
+        console.log(courseId, 3213)
         try {
             const [uploadRes, coursesRes] = await Promise.all([
                 uploadToken(),
@@ -51,7 +58,7 @@ const App = (props) => {
             if (uploadRes.data && uploadRes.data.uploadToken) {
                 setUploadData({
                     ...uploadData,
-                    token: uploadRes.data.uploadToken
+                    token: uploadRes.data.uploadToken,
                 });
             }
         } catch (error) {
@@ -68,6 +75,23 @@ const App = (props) => {
             return message.error(res.message)
         }
         formData.setFieldsValue(res.data.chapter)
+        setContent(res.data.chapter.content)
+
+    }
+
+
+    const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+    const renderHTML = (text) => {
+        // 模拟异步渲染Markdown
+        return new Promise((resolve) => {
+            resolve(mdParser.render(text))
+        })
+    }
+
+    const handleEditorChange = ({html, text}) => {
+        setContentHtml(html)
+        setContent(text)
     }
 
     /*
@@ -77,7 +101,8 @@ const App = (props) => {
         let res
         values = {
             ...values,
-            video: videoUrl
+            video: videoUrl,
+            contentHtml,
         }
         if (props.isEdit) {
             res = await updateChapter(params.id, values)
@@ -88,7 +113,7 @@ const App = (props) => {
             return message.error(res.message)
         }
         message.success(res.message)
-        navigate("/chapters")
+        navigate(`/chapters/?courseId=${courseId}`, { replace: true })
     };
 
 
@@ -122,7 +147,7 @@ const App = (props) => {
             return;
         }
         if (info.file.status === "done") {
-            setVideoUrl(`http://s49b16nfk.hn-bkt.clouddn.com/${info.file.response.key}`);
+            setVideoUrl(`http://s5ni51avc.hn-bkt.clouddn.com/${info.file.response.key}`);
             setLoading(false);
         }
     };
@@ -132,7 +157,7 @@ const App = (props) => {
             fetchData().then()
         }
         init().then()
-    }, [])
+    }, [courseId])
 
 
     return (
@@ -240,6 +265,30 @@ const App = (props) => {
                             data={uploadData}>
                         <Button icon={<UploadOutlined/>}>上传视频</Button>
                     </Upload>
+                </Form.Item>
+
+                <Form.Item
+                    name='contentHtml'
+                    label="文章内容"
+                    wrapperCol={{
+                        // span: 6,
+                        offset: 1,
+                    }}
+                >
+                    <MdEditor value={content} style={{height: '400px', marginLeft: "0"}} renderHTML={renderHTML}
+                              onChange={handleEditorChange}
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    wrapperCol={{
+                        span: 6,
+                        offset: 3,
+                    }}
+                >
+                    <Link to={`/show_chapter/${params.id}`}>
+                        <Button size="large">查看HTML页面</Button>
+                    </Link>
                 </Form.Item>
 
                 <Form.Item

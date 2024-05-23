@@ -164,13 +164,13 @@ const App = () => {
             key: 'category',
             align: 'center',
             render: (category) => {
-                const title = `所属分类:${category.name}`
+                const title = `所属分类:${category?.name}`
                 if (!category) {
                     return "无";
                 }
                 return (
                     <CustomTooltip title={title}>
-                        {category.name}
+                        {category?.name}
                     </CustomTooltip>
                 );
             },

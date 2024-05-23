@@ -197,7 +197,9 @@ const App = () => {
                     <>
                         <Space size="middle">
                             <CustomTooltip title={"编辑"}>
-                                <Link to={`/chapters/edit/${record.id}`}> 编辑</Link>
+                                <Link to={`/chapters/edit/${record.id}?courseId=${courseId}`}>
+                                    编辑
+                                </Link>
                             </CustomTooltip>
                             <DeleteButton onConfirm={confirmDelete} props={{init}} id={record.id}/>
                         </Space>
