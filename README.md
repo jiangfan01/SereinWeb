@@ -1,51 +1,66 @@
+# SereinWeb
 
-# Serein视频web端 项目介绍
+SereinWeb 是一个基于 React 和 Ant Design 开发的 Web 应用，用于用户管理和信息展示。此项目旨在提供一个高效、现代化的用户管理系统。
 
-## 技术栈:React + Vite + ant desgin
+## 技术框架
 
+本项目使用了以下主要技术栈：
 
-## 项目概述
+- **React**: 用于构建用户界面的 JavaScript 库。
+- **Ant Design**: 一个企业级的 UI 设计语言和 React 实现，提供丰富的 UI 组件。
+- **React Router**: 用于在 React 应用中进行路由管理。
+- **Axios**: 一个基于 Promise 的 HTTP 库，用于与后端 API 进行通信。
+- **uuid**: 用于生成唯一标识符。
+- **Qiniu**: 七牛云存储服务，用于文件上传。
 
-SereinWeb 是一个基于 **[React](https://reactjs.org/)** 的现代化 Web 应用程序，旨在提供一个简洁、美观的用户界面，并具备灵活的功能扩展性。该项目采用了 **[Ant Design](https://ant.design/)** 这一优秀的 UI 框架，使得用户体验更加友好。
+## 功能描述
 
-## 功能特性
+SereinWeb 主要功能包括：
 
-- **用户认证与权限管理：** 实现了基本的用户认证功能，同时支持权限管理，确保不同用户角色有不同的操作权限。
+1. **用户管理**:
+   - 用户信息展示
+   - 用户信息编辑
+   - 用户头像上传
+   - 管理员权限设置
 
-- **数据可视化：** 提供直观的数据可视化界面，帮助用户更好地理解和分析数据。
+2. **用户认证**:
+   - 用户登录
+   - 用户退出
 
-- **模块化设计：** 通过模块化的设计，使得项目更易于维护和扩展。
+## 安装示例
 
-- **响应式布局：** 采用响应式设计，确保用户在不同设备上都能获得一致的良好体验。
+以下是如何在本地环境中安装和运行 SereinWeb 项目的步骤：
 
+### 1. 克隆项目
 
-## 快速开始
+```sh
+git clone https://github.com/jiangfan01/SereinWeb.git
+cd SereinWeb
+```
 
-   克隆项目：
+### 2. 安装依赖
+确保你已经安装了 Node.js 和 yarn，然后在项目根目录下运行以下命令来安装项目的依赖：
 
-   ```bash
-   
-   git clone https://github.com/jiangfan01/SereinWeb.git
+```sh
+yarn
+```
 
-   # 进入项目   cd SereinWeb
+### 3. 运行项目
+在项目下使用命令行启动
+```sh
+yarn dev
+```
+##### 复制命令行给的Http地址
 
-   # 安装依赖 yarn
+使用示例
+用户管理
+在用户列表页面，你可以看到所有用户的信息。点击某个用户可以进入用户编辑页面，修改用户信息后点击“更新”按钮即可保存更改。
 
-   # 启动项目 yarn dev
+上传头像
+在用户编辑页面，你可以上传新的用户头像。选择图片文件后会自动上传到七牛云，并更新用户头像的显示。
 
-   ## 默认管理员
-   # 账号：Root/1431037397@qq.com
-   # 密码：123123 
+管理员权限设置
+你可以在用户编辑页面通过切换“设置管理员”开关来更改用户的管理员权限。
 
-  ```
-
-## React脚手架 
-
-### 官方文档
-
-**[脚手架文档](https://reactrouter.com/en/main/start/tutorial)**
-
-### 路由文档
-**[路由文档](https://reactrouter.com/en/main/route/route)**
-
-  
+贡献
+欢迎提交 Issues 或 Pull Requests 来帮助改进 SereinWeb。
